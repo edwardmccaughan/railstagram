@@ -1,5 +1,6 @@
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /pictures
   # GET /pictures.json
@@ -19,12 +20,17 @@ class PicturesController < ApplicationController
 
   # GET /pictures/1/edit
   def edit
+    if @picture.user != current_user
+      render text: "go away!"
+    end
   end
 
   # POST /pictures
   # POST /pictures.json
   def create
     @picture = Picture.new(picture_params)
+
+    @picture.user_id = current_user.id
 
     respond_to do |format|
       if @picture.save

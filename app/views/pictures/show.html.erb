@@ -18,7 +18,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @picture.user_id %>
+  <%= @picture.user.email %>
 </p>
 
 <%= link_to 'Edit', edit_picture_path(@picture) %> |
